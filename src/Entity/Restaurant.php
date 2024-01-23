@@ -5,7 +5,8 @@ namespace App\Entity;
 use App\Repository\RestaurantRepository;
 
 #[ORM\Entity(repositoryClass: RestaurantRepository::class)]
-#[ORM\Table(name: 'symfony_demo_post')]
+#[ORM\Table(name: 'symfony_demo_restaurant')]
+#[ApiResource]
 class Restaurant
 {
     #[ORM\Id]

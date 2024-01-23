@@ -22,7 +22,7 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 
 /**
- * A console command that count all Restaurants.
+ * A console command that list the names of the restaurants, comma separated.
  *
  * To use this command, open a terminal window, enter into your project directory
  * and execute the following:
@@ -39,7 +39,7 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
     description: 'Lists all the existing restaurants',
     aliases: ['app:restaurants']
 )]
-final class CountRestaurantsCommand extends Command
+final class ListRestaurantsCommand extends Command
 {
     public function __construct(
         private readonly RestaurantRepository $restaurants
@@ -51,7 +51,7 @@ final class CountRestaurantsCommand extends Command
     {
         $this
             ->setHelp(<<<'HELP'
-                The <info>%command.name%</info> command lists all the restaurnats registered in the application:
+                The <info>%command.name%</info> command lists all the name of de restaurants comma separated.
 
                   <info>php %command.full_name%</info>
 
@@ -60,38 +60,23 @@ final class CountRestaurantsCommand extends Command
         ;
     }
 
-    /**
-     * This method is executed after initialize(). It usually contains the logic
-     * to execute to complete this command task.
-     */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         /** @var int|null $maxResults */
         $maxResults = $input->getOption('max-results');
 
         // Use ->findBy() instead of ->findAll() to allow result sorting and limiting
-        $allRestaurants = $this->restaurants->findAll();
+        $restaurants = $this->restaurants->findAll();
 
-        $total = count($allRestaurants);
+        $namesOfRest ='';
+        foreach($restaurants as $restaurant)
+        {
+            $namesOfRest = $restaurant->getName().',';
+        }
 
         // Una vez finalizado el commando, se envia un correo electronico con el numero de restaurantes.
-        $this->sendReport($total);
+        $this->sendReport($namesOfRest);
 
         return Command::SUCCESS;
-    }
-
-    /**
-     * Sends the given $contents to the $recipient email address.
-     */
-    private function sendReport($total): void
-    {
-        $to      = 'nobody@example.com';
-        $subject = 'the subject';
-        $message = 'Hola hay: ' .$total . 'restaurantes.';
-        $headers = 'From: webmaster@example.com' . "\r\n" .
-            'Reply-To: webmaster@example.com' . "\r\n" .
-            'X-Mailer: PHP/' . phpversion();
-
-        mail($to, $subject, $message, $headers);
     }
 }
