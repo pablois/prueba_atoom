@@ -7,17 +7,16 @@
 
         </div>
         <div class="col-md-6">
-            <div class="col-md-12">
-                Detalle Restaurante
-            </div>
-            <div class="col-md-12">
-                Nombre: {{ rest['name'] }}
-            </div>
-            <div class="col-md-12">
-                Descripcion: {{ rest['body'] }}
-            </div>
-            <div class="col-md-12">
-                Ranking: {{ rest['rank'] }}
+
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title"> Detalle Restaurante. </h5>
+                    <p class="card-text">Nombre: {{ rest[0].nombre }}</p>
+                    <p class="card-text">Descripcion: {{ rest[0].body }}</p>
+                    <p class="card-text">Ranking: {{ rest[0].ranking }}.</p>
+                    <a href="/" class="btn btn-primary">Volver</a>
+                    </a>
+                </div>
             </div>
         </div>
         <div class="col-md-2">
@@ -25,7 +24,5 @@
         </div>
     </div>
 
-    <a href="/">
-        <button> VOLVER </button>
-    </a>
+
 {% endblock %}
