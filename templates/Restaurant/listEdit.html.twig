@@ -1,6 +1,104 @@
-<h2> LISTA MODIFICACION Y BORRADO DE RESTAURANTES </h2>
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="row">
+        <div class="col-md-3">
+
+        </div>
+
+        <div class="col-md-6">
+
+            <h2> LISTA MODIFICACION Y BORRADO DE RESTAURANTES </h2>
+
+            <a href="/new_restaurant">
+                <button> Nuevo Restaurante </button>
+            </a>
 
 
-<a href="/new_restaurant">
-    <button> Nuevo Restaurante </button>
-</a>
+            <table class="table" style="margin-top:2em">
+                <th class="col-md-2" style="text-align: center"> Nombre </th>
+                <th class="col-md-2" style="text-align: center"> Rating</th>
+                <th class="col-md-2" style="text-align: center"> Website</th>
+                <th class="col-md-2" style="text-align: center"> Ranking</th>
+                <th class="col-md-2" style="text-align: center"> Editar</th>
+                <th class="col-md-2" style="text-align: center"> Borrar</th>
+
+                <tr>
+                    <td style="text-align: center"> TEST 1</td>
+                    <td style="text-align: center"> TEST 1</td>
+                    <td style="text-align: center"> TEST 1</td>
+                    <td style="text-align: center"> TEST 1</td>
+                    <td style="text-align: center">
+                        <div class="offset-sm-2 col-sm-10">
+                            <a href="{{ path('listEdit_restaurants') }}"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal"> EDITAR  </button> </a>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="offset-sm-2 col-sm-10">
+                            <a href="{{ path('listEdit_restaurants') }}"><button class="btn btn-danger"> BORRAR  </button> </a>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align: center"> TEST 2</td>
+                    <td style="text-align: center"> TEST 2</td>
+                    <td style="text-align: center"> TEST 2</td>
+                    <td style="text-align: center"> TEST 2</td>
+                    <td style="text-align: center">
+                        <div class="offset-sm-2 col-sm-10">
+                            <a href="{{ path('listEdit_restaurants') }}"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" class="btn btn-primary"> EDITAR  </button> </a>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="offset-sm-2 col-sm-10">
+                            <a href="{{ path('listEdit_restaurants') }}"><button class="btn btn-danger"> BORRAR  </button> </a>
+                        </div>
+                    </td>
+                </tr>
+
+                <th class="col-md-2" style="text-align: center"> Nombre </th>
+                <th class="col-md-2" style="text-align: center"> Rating</th>
+                <th class="col-md-2" style="text-align: center"> Website</th>
+                <th class="col-md-2" style="text-align: center"> Ranking</th>
+                <th class="col-md-2" style="text-align: center"> Editar</th>
+                <th class="col-md-2" style="text-align: center"> Borrar</th>
+            </table>
+
+        </div>
+
+        <div class="col-md-3">
+
+        </div>
+
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}
+
+
+
+
+
+

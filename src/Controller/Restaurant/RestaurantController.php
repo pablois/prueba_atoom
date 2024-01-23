@@ -2,8 +2,10 @@
 
 namespace App\Controller\Restaurant;
 
+use App\Repository\RestaurantRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class RestaurantController extends AbstractController
@@ -26,6 +28,21 @@ class RestaurantController extends AbstractController
     public function addRestaurant(): Response
     {
         return $this->render('Restaurant/modalNewRestaurant.html.twig');
+    }
+
+
+    #[Route('/restaurant/{id}', name: 'detailRestaurant')]
+    public function detailRestaurant(int $id, RestaurantRepository $restaurant): Response
+    {
+        // Aunque no hay conexion en la BD, dejamos esta llamada para obtener el restaurante que buscamos segun el id inyectado.
+        // $rest = $restaurant->findOnById($id);
+        // Modificamos esta variable para que podamos tener acceso a los datos en el detalle de los datos del restaurante.
+        $rest['name']  = "Nombre de prueba.";
+        $rest['website']  = "www.ejemplo.com";
+        $rest['body']  = "Nombre de prueba.";
+        $rest['rank']  = "8";
+
+        return $this->render('Restaurant/detailRestaurant.html.twig', ['id'=> $id, 'rest' => $rest]);
     }
 
 }

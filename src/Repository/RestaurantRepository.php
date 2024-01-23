@@ -40,4 +40,19 @@ class RestaurantRepository
         return $result;
     }
 
+    public function findBestRanked()
+    {
+        $queryBuilder = $this->createQueryBuilder('p');
+
+        $result = $queryBuilder
+            ->orderBy('p.ranking', 'DESC')
+            ->getQuery()
+            ->getResult()
+            ->setMaxResults(1);
+        ;
+
+        return $result;
+    }
+
+
 }

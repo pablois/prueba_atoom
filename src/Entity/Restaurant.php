@@ -2,11 +2,18 @@
 
 namespace App\Entity;
 
-use App\Repository\RestaurantRepository;
+use ApiPlatform\Metadata\ApiResource;
+use ApiPlatform\Metadata\Get;
 
-#[ORM\Entity(repositoryClass: RestaurantRepository::class)]
-#[ORM\Table(name: 'symfony_demo_restaurant')]
-#[ApiResource]
+#[ApiResource(operations: [
+    new Get(
+        uriTemplate: 'api/restaurant/{id}',
+        requirements: ['id' => '\d+']
+    ),
+    new Get(
+        uriTemplate: 'api/restaurants',
+    )
+])]
 class Restaurant
 {
     #[ORM\Id]
