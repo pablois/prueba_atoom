@@ -29,7 +29,7 @@
                         <td style="text-align: center"> {{ r.body }}</td>
                         <td style="text-align: center"> {{ r.website }}</td>
                         <td style="text-align: center"> {{ r.ranking }}</td>
-                        <td style="text-align: center"> <a  href="{{ path('detailRestaurant' , { 'id': r.id }) }}" class="btn btn-outline-secondary" href="#" role="button">Editar</a></td>
+                        <td style="text-align: center"> <a  href="{{ path('editRestaurant' , { 'id': r.id }) }}" class="btn btn-outline-secondary" href="#" role="button">Editar</a></td>
                         <td style="text-align: center"> <a href="{{ path('detailRestaurant' , { 'id': r.id }) }}" class="btn btn-outline-danger" href="#" role="button">Borrar</a> </td>
                     </tr>
                 {% endfor %}

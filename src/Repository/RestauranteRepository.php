@@ -21,6 +21,25 @@ class RestauranteRepository extends ServiceEntityRepository
         parent::__construct($registry, Restaurante::class);
     }
 
+    public function update(int $id, string $nombre,  string $website, string $body, int $ranking)
+    {
+        $queryBuilder = $this->createQueryBuilder('p');
+
+        $query = $queryBuilder->update()
+            ->set('p.nombre', ':nombre')
+            ->set('p.website', ':website')
+            ->set('p.ranking', ':ranking')
+            ->set('p.body', ':body')
+            ->where('p.id = :editId')
+            ->setParameter('ranking', $ranking)
+            ->setParameter('website', $website)
+            ->setParameter('nombre', $nombre)
+            ->setParameter('body', $body)
+            ->setParameter('editId', $id)
+            ->getQuery();
+        $result = $query->execute();
+    }
+
     public function findBestRanked()
     {
 

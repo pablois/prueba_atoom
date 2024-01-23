@@ -37,6 +37,35 @@ class RestaurantController extends AbstractController
     }
 
 
+    #[Route('/editRestaurant/{id}', name: 'editRestaurant')]
+    public function editRestaurant(int $id, RestauranteRepository $restaurant): Response
+    {
+        $rest = $restaurant->findOneById($id);
+
+        return $this->render('Restaurant/editRestaurant.html.twig', ['rest' => $rest]);
+    }
+
+    #[Route('/updateRestaurant', name: 'updateRestaurant')]
+    public function updateRestaurant(Request $request, RestauranteRepository $restaurant): Response
+    {
+
+        var_dump("se esta llamando");
+        $nombre = $request->request->get('nombre');
+        $id = $request->request->get('id');
+        $website = $request->request->get('website');
+        $body = $request->request->get('descripcion');
+        $ranking = $request->request->get('ranking');
+        var_dump($nombre);
+        var_dump($id);
+        var_dump($website);
+        var_dump($body);
+        var_dump($ranking);
+
+        $restaurant->update( $id,  $nombre,   $website,  $body,  $ranking);
+
+        return new Response("Actualizado correctamente");
+    }
+
     #[Route('/restaurant/{id}', name: 'detailRestaurant')]
     public function detailRestaurant(int $id, RestauranteRepository $restaurant): Response
     {

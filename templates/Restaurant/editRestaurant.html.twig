@@ -1,0 +1,55 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <div class="row col-md-12" >
+
+
+        <div class="col-md-2">
+
+        </div>
+        <div class="col-md-8">
+            <div class="card col-md-12" style="margin-top: 3em"><h5> Edicion de restaurante. </h5>
+                <div class="card-body">
+                    <h5 class="card-title"> Detalle Restaurante. </h5>
+                    <input type="hidden" id="clave" value="{{ rest[0].id }}">
+                    <p class="card-text">Nombre:  <input id="nombre" class=" form form-control" type="text" value="{{ rest[0].nombre }}"></p>
+                    <p class="card-text">Descripcion: <input id="descripcion" class=" form form-control" type="text" value="{{ rest[0].body }}"> </p>
+                    <p class="card-text">Website: <input id="website" class=" form form-control" type="text" value="{{ rest[0].website }}"> </p>
+                    <p class="card-text">Ranking: <input id="ranking" class=" form form-control" type="text" value="{{ rest[0].ranking }}"></p>
+                    <a href="/" class="btn btn-secondary">Volver</a>
+                    <button onclick="senddata();" class="btn btn-secondary">send data </button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-2">
+
+        </div>
+    </div>
+
+<script>
+    function senddata()
+    {
+        let id = document.getElementById('clave').value;
+        let nombre = document.getElementById('nombre').value;
+        let descripcion = document.getElementById('descripcion').value;
+        let website = document.getElementById('website').value;
+        let ranking = document.getElementById('ranking').value;
+        alert(id);
+        alert(nombre);
+        alert(descripcion);
+        alert(website);
+        alert(ranking);
+
+        $.ajax({
+            type: "POST",
+            url: "{{ path('updateRestaurant') }}",
+            async: true,
+            data: {'id': id, 'nombre': nombre, 'descripcion': descripcion, 'website': website, 'ranking': ranking},
+
+        });
+    }
+
+</script>
+
+{% endblock %}
