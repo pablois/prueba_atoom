@@ -8,9 +8,9 @@
 
         <div class="col-md-6">
 
-            <h2> LISTA MODIFICACION Y BORRADO DE RESTAURANTES </h2>
+            <h2 style="margin-top: 1em"> LISTA MODIFICACION Y BORRADO DE RESTAURANTES </h2>
 
-            <a class="btn btn-primary" href="/new_restaurant">
+            <a class="btn btn-primary btn-sm" href="/new_restaurant">
                 Nuevo Restaurante
             </a>
 
@@ -29,8 +29,8 @@
                         <td style="text-align: center"> {{ r.body }}</td>
                         <td style="text-align: center"> {{ r.website }}</td>
                         <td style="text-align: center"> {{ r.ranking }}</td>
-                        <td style="text-align: center"> {{ r.ranking }}</td>
-                        <td style="text-align: center"> {{ r.ranking }}</td>
+                        <td style="text-align: center"> <a  href="{{ path('detailRestaurant' , { 'id': r.id }) }}" class="btn btn-outline-secondary" href="#" role="button">Editar</a></td>
+                        <td style="text-align: center"> <a href="{{ path('detailRestaurant' , { 'id': r.id }) }}" class="btn btn-outline-danger" href="#" role="button">Borrar</a> </td>
                     </tr>
                 {% endfor %}
                 <tr>
