@@ -96,6 +96,12 @@ class RestaurantController extends AbstractController
         return new Response("Insertado correctamente");
     }
 
+    #[Route('/contactForm', name: 'contactForm')]
+    public function contactForm()
+    {
+        return $this->render('Restaurant/contactForm.html.twig');
+    }
+
     #[Route('/restaurant/{id}', name: 'detailRestaurant')]
     public function detailRestaurant(int $id, RestauranteRepository $restaurant): Response
     {

@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+<div class="row">
+    <div class="col-md-2">
+
+    </div>
+
+    <div class="col-md-8">
+
+
+
+        <form style="margin-top:2em;">
+            <div style="display:none;" class="alert alert-success" id="contacto"> Formulario enviado correctamente. En breve responderemos su consulta. Muchas gracias. </div>
+            <div class="card-header">
+                <div>
+                  <h4> Formulario de contacto </h4>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="inputPassword4">Nombre</label>
+                        <input type="password" class="form-control" id="inputPassword4" placeholder="Nombre">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputEmail4">Email</label>
+                        <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    <label for="inputAddress">Consulta</label>
+                    <textarea style="resize: none;" class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Introduzca la consulta."></textarea>
+                </div>
+
+                <a href="/"> <button style="margin-left: 84%" type="button" class="btn btn-secondary btm-sm">Volver</button> </a>
+                <button style="margin-left: 3%" id="btnForm" onclick="sendForm();" type="button" class="btn btn-primary btm-sm">Enviar</button>
+            </div>
+
+        </form>
+
+    </div>
+
+    <div class="col-md-2">
+
+    </div>
+
+    <script>
+        function sendForm()
+        {
+            $('#contacto').show();
+            $('#btnForm').hide();
+        }
+    </script>
+
+</div>
+
+{% endblock %}
