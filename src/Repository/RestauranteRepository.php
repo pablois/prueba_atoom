@@ -40,6 +40,18 @@ class RestauranteRepository extends ServiceEntityRepository
         $result = $query->execute();
     }
 
+    public function delete(int $id)
+    {
+
+        $queryBuilder = $this->createQueryBuilder('p');
+
+        $query = $queryBuilder->delete()
+            ->where('p.id = :editId')
+            ->setParameter('editId', $id)
+            ->getQuery();
+        return $query->execute();
+    }
+
     public function findBestRanked()
     {
 
@@ -47,9 +59,10 @@ class RestauranteRepository extends ServiceEntityRepository
 
         $result = $queryBuilder
             ->orderBy('p.ranking', 'DESC')
+            ->setMaxResults(1)
             ->getQuery()
             ->getResult()
-            ->setMaxResults(1);
+
         ;
 
         return $result;

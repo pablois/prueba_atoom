@@ -11,7 +11,7 @@
 
 namespace App\Command;
 
-use App\Repository\RestaurantRepository;
+use App\Repository\RestauranteRepository;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -42,7 +42,7 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
 final class CountRestaurantsCommand extends Command
 {
     public function __construct(
-        private readonly RestaurantRepository $restaurants
+        private readonly RestauranteRepository $restaurants
     ) {
         parent::__construct();
     }
@@ -66,8 +66,6 @@ final class CountRestaurantsCommand extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        /** @var int|null $maxResults */
-        $maxResults = $input->getOption('max-results');
 
         // Use ->findBy() instead of ->findAll() to allow result sorting and limiting
         $allRestaurants = $this->restaurants->findAll();
@@ -75,23 +73,14 @@ final class CountRestaurantsCommand extends Command
         $total = count($allRestaurants);
 
         // Una vez finalizado el commando, se envia un correo electronico con el numero de restaurantes.
-        $this->sendReport($total);
+
+        $output->writeln([
+            'Restaurants',
+            '============',
+            'El numero de restaurantes es: . ',
+            $total,
+        ]);
 
         return Command::SUCCESS;
-    }
-
-    /**
-     * Sends the given $contents to the $recipient email address.
-     */
-    private function sendReport($total): void
-    {
-        $to      = 'nobody@example.com';
-        $subject = 'the subject';
-        $message = 'Hola hay: ' .$total . 'restaurantes.';
-        $headers = 'From: webmaster@example.com' . "\r\n" .
-            'Reply-To: webmaster@example.com' . "\r\n" .
-            'X-Mailer: PHP/' . phpversion();
-
-        mail($to, $subject, $message, $headers);
     }
 }

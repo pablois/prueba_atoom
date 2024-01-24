@@ -11,7 +11,7 @@
 
 namespace App\Command;
 
-use App\Repository\RestaurantRepository;
+use App\Repository\RestauranteRepository;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -35,14 +35,14 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
  * See https://symfony.com/doc/current/console.html
  */
 #[AsCommand(
-    name: 'app:count-restaurants',
+    name: 'app:list-restaurants',
     description: 'Lists all the existing restaurants',
     aliases: ['app:restaurants']
 )]
 final class ListRestaurantsCommand extends Command
 {
     public function __construct(
-        private readonly RestaurantRepository $restaurants
+        private readonly RestauranteRepository $restaurants
     ) {
         parent::__construct();
     }
@@ -62,20 +62,22 @@ final class ListRestaurantsCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        /** @var int|null $maxResults */
-        $maxResults = $input->getOption('max-results');
-
         // Use ->findBy() instead of ->findAll() to allow result sorting and limiting
         $restaurants = $this->restaurants->findAll();
 
-        $namesOfRest ='';
+        $namesOfRest = '';
         foreach($restaurants as $restaurant)
         {
-            $namesOfRest = $restaurant->getName().',';
+            $namesOfRest = $namesOfRest . ",". $restaurant->getNombre();
         }
 
-        // Una vez finalizado el commando, se envia un correo electronico con el numero de restaurantes.
-        $this->sendReport($namesOfRest);
+        // Una vez finalizado el commando, se envia la lista disponible por consola.
+        $output->writeln([
+            'Restaurants',
+            '============',
+            'Listado de restaurantes. ',
+            substr($namesOfRest, 1),
+        ]);
 
         return Command::SUCCESS;
     }

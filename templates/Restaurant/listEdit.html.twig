@@ -30,7 +30,7 @@
                         <td style="text-align: center"> {{ r.website }}</td>
                         <td style="text-align: center"> {{ r.ranking }}</td>
                         <td style="text-align: center"> <a  href="{{ path('editRestaurant' , { 'id': r.id }) }}" class="btn btn-outline-secondary" href="#" role="button">Editar</a></td>
-                        <td style="text-align: center"> <a href="{{ path('detailRestaurant' , { 'id': r.id }) }}" class="btn btn-outline-danger" href="#" role="button">Borrar</a> </td>
+                        <td style="text-align: center"> <a id="borrado" onclick="borrado( {{ r.id }})" class="btn btn-outline-danger" href="#" role="button">Borrar</a> </td>
                     </tr>
                 {% endfor %}
                 <tr>
@@ -52,28 +52,35 @@
 
     </div>
 
+<script>
+    function borrado(id)
+    {
+        alert(id);
+        if ( this.host !== window.location.host ) {
 
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    ...
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-        </div>
-    </div>
+            if (window.confirm('¿Está seguro que desea borrar el registro?')) {
 
+                $.ajax({
+                    type: "POST",
+                    url: "{{ path('deleteRestaurant') }}",
+                    async: true,
+                    data: {'id': id},
+                    success: function(){
+                        location.reload();
+                    }
+                });
+                // They clicked Yes
+
+            } else {
+                // They clicked no
+                console.log('you chose to stay here.');
+                return false
+
+            }
+        }
+    }
+
+</script>
 
 {% endblock %}
 

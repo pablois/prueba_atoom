@@ -11,7 +11,7 @@
 
 namespace App\Command;
 
-use App\Repository\RestaurantRepository;
+use App\Repository\RestauranteRepository;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -27,7 +27,7 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
  * To use this command, open a terminal window, enter into your project directory
  * and execute the following:
  *
- *     $ php bin/console app:count-restaurants
+ *     $ php bin/console app:restaurants:export
  *
  * Check out the code of the src/Command/AddUserCommand.php file for
  * the full explanation about Symfony commands.
@@ -43,7 +43,7 @@ use Symfony\Component\DependencyInjection\Attribute\Autowire;
 final class ExportRestaurantCommand extends Command
 {
     public function __construct(
-        private readonly RestaurantRepository $restaurants
+        private readonly RestauranteRepository $restaurants
     )
     {
         parent::__construct();
@@ -64,8 +64,6 @@ final class ExportRestaurantCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        /** @var int|null $maxResults */
-        $maxResults = $input->getOption('max-results');
 
         // Use ->findBy() instead of ->findAll() to allow result sorting and limiting
         $allRestaurants = $this->restaurants->findAll();
@@ -74,12 +72,11 @@ final class ExportRestaurantCommand extends Command
 
         foreach($allRestaurants as $restaurant)
         {
-            fwrite($myfile, $restaurant->name().'\n');
+            fwrite($myfile, $restaurant->getNombre()."\r\n");
         }
 
         fclose($myfile);
 
         return Command::SUCCESS;
     }
-
 }

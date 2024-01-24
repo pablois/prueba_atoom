@@ -1,47 +1,48 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-
-    <div class="row">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <div class="row col-md-12">
 
         <div class="col-md-2">
 
         </div>
         <div class="col-md-8">
-            <h3>
-                NUEVO RESTAURANTE
-            </h3>
-            <div class="form-group row">
-                <label for="inputEmail" class="col-sm-2 col-form-label">Nombre </label>
-                <div class="col-sm-10">
-                    <input type="nombre" class="form-control" id="inputEmail" name="email" placeholder="Nombre">
+            <div class="card col-md-12 card-header" style="margin-top: 1em">
+                <h3 style="margin-top: 1em">
+                    NUEVO RESTAURANTE
+                </h3>
+                <div class="alert alert-info" style="display:none;margin-top: 1em" id="correct1"> El registro se ha insertado correctamente.  </div>
+                <div style="margin-top: 3em" class="form-group row">
+                    <label for="inputEmail" class="col-sm-2 col-form-label">Nombre </label>
+                    <div class="col-sm-10">
+                        <input type="nombre" class="form-control" id="name" name="email" placeholder="Nombre">
+                    </div>
                 </div>
-            </div>
-            <div class="form-group row">
-                <label for="inputEmail" class="col-sm-2 col-form-label">Descripcion </label>
-                <div class="col-sm-10">
-                    <input type="descripcion" class="form-control" id="inputEmail" name="email" placeholder="Descripcion">
+                <div class="form-group row">
+                    <label for="inputEmail" class="col-sm-2 col-form-label">Descripción </label>
+                    <div class="col-sm-10">
+                        <input type="descripcion" class="form-control" id="descripcion" name="email" placeholder="Descripción">
+                    </div>
                 </div>
-            </div>
-            <div class="form-group row">
-                <label for="inputEmail" class="col-sm-2 col-form-label">Ranking </label>
-                <div class="col-sm-10">
-                    <input type="ranking" class="form-control" id="inputEmail" name="email" placeholder="Ranking">
+                <div class="form-group row">
+                    <label for="inputEmail" class="col-sm-2 col-form-label">Ranking </label>
+                    <div class="col-sm-10">
+                        <input type="ranking" class="form-control" id="ranking" name="email" placeholder="Ranking">
+                    </div>
                 </div>
-            </div>
-            <div class="form-group row">
-                <label for="inputEmail" class="col-sm-2 col-form-label">Website </label>
-                <div class="col-sm-10">
-                    <input type="website" class="form-control" id="inputEmail" name="email" placeholder="Website">
+                <div class="form-group row">
+                    <label for="inputEmail" class="col-sm-2 col-form-label">Website </label>
+                    <div class="col-sm-10">
+                        <input type="website" class="form-control" id="website" name="email" placeholder="Website">
+                    </div>
                 </div>
-            </div>
 
-            <div class="row">
+                <div class="row" style="margin-top: 3em">
 
-                <a class="btn button-reset" href="/list"> Volver
-                </a>
-                <a style="margin-left: 1em;" class="btn btn-primary" href="/"> Guardar
-                </a>
+                    <a style="margin-left: 78%"  href="/list"> <button class="btn btn-secondary">   Volver </button> </a>
+                    <button style="margin-left: 3%" class="btn btn-primary" id="btnGuardar2" onclick="safedata();" > Guardar </button>
+                </div>
             </div>
         </div>
         <div class="col-md-2">
@@ -50,5 +51,28 @@
     
     </div>
 
+    <script>
+        function safedata()
+        {
+
+            let nombre = document.getElementById('name').value;
+            let descripcion = document.getElementById('descripcion').value;
+            let website = document.getElementById('website').value;
+            let ranking = document.getElementById('ranking').value;
+            alert("se va a guardar");
+
+            $.ajax({
+                type: "POST",
+                url: "{{ path('addNewRestaurant') }}",
+                async: true,
+                data: {'nombre': nombre, 'descripcion': descripcion, 'website': website, 'ranking': ranking},
+                success: function(){
+                    alert("correcto");
+                    $('#correct1').show();
+                    $('#btnGuardar2').hide();
+                }
+            });
+        }
+    </script>
 
 {% endblock %}

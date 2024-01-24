@@ -2,9 +2,9 @@
 
 namespace App\Controller\Restaurant;
 
-use App\Factory\RestauranteFactory;
+use App\Entity\Restaurante;
 use App\Repository\RestauranteRepository;
-use App\Repository\RestaurantRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -55,15 +55,45 @@ class RestaurantController extends AbstractController
         $website = $request->request->get('website');
         $body = $request->request->get('descripcion');
         $ranking = $request->request->get('ranking');
-        var_dump($nombre);
-        var_dump($id);
-        var_dump($website);
-        var_dump($body);
-        var_dump($ranking);
 
         $restaurant->update( $id,  $nombre,   $website,  $body,  $ranking);
 
         return new Response("Actualizado correctamente");
+    }
+
+    #[Route('/deleteRestaurant', name: 'deleteRestaurant')]
+    public function deleteRestaurant(Request $request, RestauranteRepository $restaurant): Response
+    {
+        $id = $request->request->get('id');
+        $restaurant->delete($id);
+
+        return new Response ( "Registro borrado");
+    }
+
+
+    #[Route('/addNewRestaurant', name: 'addNewRestaurant')]
+    public function addNewRestaurant(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $nombre = $request->request->get('nombre');
+        $website = $request->request->get('website');
+        $body = $request->request->get('descripcion');
+        $ranking = $request->request->get('ranking');
+
+        // Aunque en los otros casos de manipulacion de BD, hemos usado la clase QueryBuilder, para
+        // insertar registros, es mas eficiente usar la clase EntityManager.
+        $rest = new Restaurante();
+        $rest->setNombre($nombre);
+        $rest->setWebsite($website);
+        $rest->setBody($body);
+        $rest->setRanking($ranking);
+
+        // tell Doctrine you want to (eventually) save the Product (no queries yet)
+        $entityManager->persist($rest);
+
+        // actually executes the queries (i.e. the INSERT query)
+        $entityManager->flush();
+
+        return new Response("Insertado correctamente");
     }
 
     #[Route('/restaurant/{id}', name: 'detailRestaurant')]
@@ -75,20 +105,21 @@ class RestaurantController extends AbstractController
     }
 
     #[Route('/resturants/export', name: 'exportRestauarant')]
-    public function exportRestaurant()
+    public function exportRestaurant(RestauranteRepository $restaurant): Response
     {
-        $allRestaurants = $this->restaurants->findAll();
+        $allRestaurants = $restaurant->findAll();
 
-        $myfile = fopen("namesRestaurant.txt", "w") or die("Unable to open file!");
+        $myfile = fopen("namesRestaurantURL.txt", "w") or die("Unable to open file!");
 
-        foreach($allRestaurants as $restaurant)
+        foreach($allRestaurants as $r)
         {
-            fwrite($myfile, $restaurant->name().'\n');
+            fwrite($myfile, $r->getNombre()."\r\n");
         }
 
+        fwrite($myfile, 'Archivo generado por URL.'. "\r\n");
         fclose($myfile);
 
-        return new Response("Conversion realizada. ");
+        return new Response("Exportacion realizada correctamente. ");
     }
 
 }

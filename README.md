@@ -25,6 +25,13 @@ Para el acceso al proyecto, sera necesario hacer gitclone de la
 rama en la que se encuentra actualmente el proyecto en la 
 plataforma GIT.
 
+DEFINICIONES
+
+Se realiza una clase Restaurant, que consta con 5 propiedades, en las que
+cabe aclarar que se encuentra el ranking, para esta prueba hemos supuesto
+que el ranking son las visitas que tiene el restaurante, por lo que a mas
+alto numero mejor posicionado se encuentra. 
+
 
 
 
