@@ -32,6 +32,11 @@ cabe aclarar que se encuentra el ranking, para esta prueba hemos supuesto
 que el ranking son las visitas que tiene el restaurante, por lo que a mas
 alto numero mejor posicionado se encuentra. 
 
+Se ha preparado un acceso API usando APIPLATFORM, para la gestion mas facil 
+de las entidadades. Basta con al generar las entidades mediante el
+comando make:entity hacerlo compatible con API y exponerlo a la URI
+correspondiente.
+
 
 
 
